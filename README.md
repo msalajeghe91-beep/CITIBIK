@@ -585,6 +585,3 @@ This project is for educational and portfolio purposes.
 - Reference in cover letters for data science roles
 
 ---
-
-**Built with ❤️ for safer bike-sharing**  
-*Demonstrating data-driven insurance pricing through geographic risk modeling*
