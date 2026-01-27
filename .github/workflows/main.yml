@@ -7,13 +7,10 @@ on:
 jobs:
   lint-and-smoke:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
@@ -24,20 +21,25 @@ jobs:
           pip install -r requirements.txt
           pip install ruff
 
+      # IMPORTANT lint: only real code, not notebooks
       - name: Lint (code only)
         run: |
-         ruff check src scripts tests
-         ruff format --check src scripts tests
+          ruff check src scripts tests
 
-
-      - name: Check fixtures present
+      # optional: formatting check, still only code
+      - name: Format check (code only)
         run: |
-          test -f tests/fixtures/citibike_zips/202301-citibike-tripdata.zip
-          test -f tests/fixtures/nypd/nypd_sample.csv || echo "No NYPD fixture (OK)"
+          ruff format --check src scripts tests
 
+      # important: prove CLIs at least import and parse args
+      - name: CLI help smoke
+        run: |
+          python -m pip freeze | head -n 50
+          python src/ingest_tripdata.py --help
+          python scripts/summarize_citibike_usage.py --help
+          python scripts/build_axa_scorecard.py --help
+
+      # REAL smoke pipeline
       - name: Smoke pipeline (fixture)
-        shell: bash
         run: |
-          set -euxo pipefail
           make smoke
-
