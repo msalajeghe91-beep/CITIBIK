@@ -1,0 +1,42 @@
+.github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff
+
+      - name: Lint
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Check fixtures present
+        run: |
+          test -f tests/fixtures/citibike_zips/202301-citibike-tripdata.zip
+          test -f tests/fixtures/nypd/nypd_sample.csv || echo "No NYPD fixture (OK)"
+
+      - name: Smoke pipeline (fixture)
+        shell: bash
+        run: |
+          set -euxo pipefail
+          make smoke
