@@ -25,8 +25,6 @@ Examples:
 from __future__ import annotations
 
 import argparse
-import re
-import sys
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
@@ -34,6 +32,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 from urllib.parse import quote, urljoin
 from urllib.request import Request, urlopen
+
 
 
 DEFAULT_BUCKET_URLS = (
