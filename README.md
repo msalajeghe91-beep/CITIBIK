@@ -30,13 +30,6 @@ This project analyzes **6.7M+ CitiBike trips** and **15K+ NYPD crash reports** t
 ### Installation & Run
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/citibike-insurance-challenge.git
-cd citibike-insurance-challenge
-
-# 2. Download NYPD crash data 
-curl -L "https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accessType=DOWNLOAD" -o h9gi-nx95_full.csv
-# Save to: data/raw/nypd/
 
 # 3. Run the complete pipeline (downloads data, analyzes, generates reports) you can run the whole pipline for any year, month abd raduis 
 make all MODE=nyc YEARS="YYYY YYYY ..." MONTHS="1 2 MM ..." RADII_M="Any Raduis" AXA_RADIUS="Any Raduism"
