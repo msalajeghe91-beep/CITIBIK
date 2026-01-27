@@ -1,0 +1,14 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["data", ".venv", "reports", "summaries", "notebooks/executed", "tmp"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/train_predict.py" = ["F841"]
+"scripts/download_tripdata.py" = ["F841"]
+"scripts/summarize_citibike_usage.py" = ["F841"]
